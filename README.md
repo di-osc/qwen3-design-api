@@ -18,7 +18,7 @@ sudo apt-get update && sudo apt-get install -y sox
 python server.py
 ```
 
-服务将在 `http://0.0.0.0:8000` 启动（可通过 `http://localhost:8000` 访问）
+服务将在 `http://0.0.0.0:8867` 启动（可通过 `http://localhost:8867` 访问）
 
 ### 后台运行（推荐）
 
@@ -34,8 +34,32 @@ python server.py
 ### 检查服务状态
 
 ```bash
-curl http://localhost:8000/
+curl http://localhost:8867/
 ```
+
+## 测试
+
+项目包含两个测试脚本：
+
+### 快速测试
+
+```bash
+python quick_test.py
+```
+
+快速验证API基本功能，无需手动启动服务器。
+
+### 完整测试
+
+```bash
+python test_api.py
+```
+
+完整测试套件，包括：
+- 自动启动/停止服务器
+- 多语言音频生成测试
+- 音频文件验证
+- 详细的测试报告
 
 ## API接口
 

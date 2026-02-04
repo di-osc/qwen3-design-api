@@ -1,5 +1,12 @@
 torch
+torchaudio
+transformers
 soundfile
-qwen_tts
+sox
+onnxruntime
+librosa
+einops
+accelerate
 fastapi
 uvicorn[standard]
+requests
