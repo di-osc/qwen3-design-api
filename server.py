@@ -1,5 +1,6 @@
 import io
 import logging
+from contextlib import asynccontextmanager
 
 import torch
 import soundfile as sf
@@ -16,8 +17,10 @@ logger = logging.getLogger(__name__)
 model = None
 
 
-def init_model():
-    """初始化Qwen3-TTS模型"""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """应用生命周期管理"""
+    # 启动时初始化模型
     global model
     try:
         logger.info("正在加载Qwen3-TTS模型...")
@@ -32,16 +35,19 @@ def init_model():
         logger.error(f"模型加载失败: {e}")
         raise
 
+    yield
+
+    # 关闭时清理资源（如果需要）
+    logger.info("应用关闭")
+
 
 # 创建FastAPI应用
 app = FastAPI(
-    title="音色设计API", description="基于Qwen3-TTS的音色设计服务", version="1.0.0"
+    title="音色设计API",
+    description="基于Qwen3-TTS的音色设计服务",
+    version="1.0.0",
+    lifespan=lifespan,
 )
-
-# 启动时初始化模型
-@app.on_event("startup")
-async def startup_event():
-    init_model()
 
 # 添加CORS中间件
 app.add_middleware(
