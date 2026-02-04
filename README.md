@@ -37,6 +37,63 @@ python server.py
 curl http://localhost:8867/
 ```
 
+## 客户端使用
+
+项目提供了完整的Python客户端，支持多种使用方式：
+
+### 命令行使用
+
+```bash
+# 基础用法
+python client.py "你好，这是一个测试音频"
+
+# 指定音色和输出文件
+python client.py "今天天气真好" -i "活泼开朗的女声" -o weather.wav
+
+# 英文音频生成
+python client.py "Hello world" -l English -i "Professional male voice" -o english.wav
+
+# 自定义服务器地址
+python client.py "测试文本" --host your-server.com --port 8000
+
+# 列出目录中的音频文件
+python client.py --list-audio generated_audio/
+```
+
+### Python代码调用
+
+```python
+from client import VoiceDesignClient, quick_generate
+
+# 方式1: 使用客户端类
+client = VoiceDesignClient()
+audio_file = client.generate_audio(
+    text="你好，欢迎使用音色设计API！",
+    instruct="温柔的女声",
+    output_file="output.wav"
+)
+
+# 方式2: 便捷函数
+audio_file = quick_generate(
+    text="快速生成音频",
+    instruct="清脆的女声"
+)
+
+# 方式3: 批量生成
+client.batch_generate([
+    {"text": "第一个音频", "instruct": "温柔女声"},
+    {"text": "第二个音频", "instruct": "活泼男声"}
+], output_dir="batch_output")
+```
+
+### 使用示例
+
+运行完整的使用示例：
+
+```bash
+python example_client.py
+```
+
 ## 测试
 
 项目包含两个测试脚本：
