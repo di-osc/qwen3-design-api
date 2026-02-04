@@ -5,7 +5,11 @@
 ## 安装依赖
 
 ```bash
+# 安装Python依赖
 pip install -r requirements.txt
+
+# 安装系统依赖（Ubuntu/Debian）
+sudo apt-get update && sudo apt-get install -y sox
 ```
 
 ## 运行服务
@@ -15,6 +19,22 @@ python server.py
 ```
 
 服务将在 http://localhost:8000 启动
+
+### 后台运行（推荐）
+
+```bash
+# 使用screen在后台运行
+screen -S voice-api
+python server.py
+
+# 按Ctrl+A+D分离screen会话
+```
+
+### 检查服务状态
+
+```bash
+curl http://localhost:8000/
+```
 
 ## API接口
 
@@ -33,8 +53,17 @@ python server.py
 
 **示例请求:**
 ```bash
+# 生成音频文件
 curl -X POST "http://localhost:8000/generate_audio?text=你好世界&instruct=温柔的女声" \
      -o generated_audio.wav
+
+# 使用中文文本和指令
+curl -X POST "http://localhost:8000/generate_audio?text=哥哥，你回来啦&language=Chinese&instruct=体现撒娇稚嫩的萝莉女声，音调偏高且起伏明显" \
+     -o cute_voice.wav
+
+# 使用英文文本
+curl -X POST "http://localhost:8000/generate_audio?text=Hello world&language=English&instruct=Speak in a cheerful and energetic tone" \
+     -o english_audio.wav
 ```
 
 **返回:** WAV格式的音频文件
