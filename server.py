@@ -108,3 +108,9 @@ async def generate_audio(
     except Exception as e:
         logger.error(f"音频生成失败: {e}")
         raise HTTPException(status_code=500, detail=f"音频生成失败: {str(e)}")
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=False, log_level="info")

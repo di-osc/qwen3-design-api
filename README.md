@@ -18,7 +18,7 @@ sudo apt-get update && sudo apt-get install -y sox
 python server.py
 ```
 
-服务将在 http://localhost:8000 启动
+服务将在 `http://0.0.0.0:8000` 启动（可通过 `http://localhost:8000` 访问）
 
 ### 后台运行（推荐）
 
@@ -28,6 +28,7 @@ screen -S voice-api
 python server.py
 
 # 按Ctrl+A+D分离screen会话
+# 重新连接：screen -r voice-api
 ```
 
 ### 检查服务状态
