@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # 全局模型变量
 model = None
-
+model_path = "/root/autodl-tmp/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,7 +25,7 @@ async def lifespan(app: FastAPI):
     try:
         logger.info("正在加载Qwen3-TTS模型...")
         model = Qwen3TTSModel.from_pretrained(
-            "/root/autodl-tmp/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+            model_path,
             device_map="cuda:0",
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
@@ -113,4 +113,4 @@ async def generate_audio(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=False, log_level="info")
+    uvicorn.run("server:app", host="0.0.0.0", port=8867, reload=False, log_level="info")
